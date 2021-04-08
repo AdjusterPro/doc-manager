@@ -3,7 +3,7 @@ class GoogleBackup
     @g = session
     @logger = options[:logger] || Logger.new(STDERR)
     @user_to_remove = options[:user_to_remove] || 'nobody@example.com'
-    @dont_remove = options[:dont_remove] || 'nobody@example.com'
+    @dont_remove = options[:dont_remove].downcase || 'nobody@example.com'
     @remove_permissions = options[:remove_permissions] || false
   end
 
@@ -43,7 +43,7 @@ class GoogleBackup
 
   def remove_permissions(file)
     return [] unless @remove_permissions
-    file.acl.select { |acl| acl.role != "owner" && acl.email_address != @dont_remove }
+    file.acl.select { |acl| acl.role != "owner" && acl.email_address.downcase != @dont_remove }
     .map do |acl|
       file.acl.delete(acl)
       acl.email_address
