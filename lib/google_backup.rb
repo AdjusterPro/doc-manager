@@ -1,9 +1,11 @@
 class GoogleBackup
+  attr_reader :g
+
   def initialize(session, options = {})
     @g = session
     @logger = options[:logger] || Logger.new(STDERR)
-    @user_to_remove = options[:user_to_remove] || 'nobody@example.com'
-    @dont_remove = options[:dont_remove].downcase || 'nobody@example.com'
+    @user_to_remove = (options[:user_to_remove] || 'nobody@example.com').downcase
+    @dont_remove = (options[:dont_remove] || 'nobody@example.com').downcase
     @remove_permissions = options[:remove_permissions] || false
   end
 
