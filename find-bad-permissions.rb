@@ -31,7 +31,7 @@ end
 
 
 agent = GoogleBackup.new(
-  GoogleDrive::Session.from_config(env('GCLOUD_SERVICE_ACCT_CONFIG'))
+  GoogleDrive::Session.from_config(env('GCLOUD_CONFIG'))
 )
 
 i = 0
