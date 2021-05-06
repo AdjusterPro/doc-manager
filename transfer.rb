@@ -19,23 +19,12 @@ session = GoogleDrive::Session.from_config(service_account_config)
 
 agent = GoogleBackup.new(
   session,
+  JSON.parse(File.read(service_account_config))['client_email'],
   remove_permissions: true,
-  dont_remove: JSON.parse(File.read(service_account_config))['client_email']
+  downgrade_permissions: true,
+  allowed_accounts: JSON.parse(File.read(env('DOC_MGR_OK_EMAILS')))
 )
 
-puts [
-  'id',
-  'name',
-  'type',
-  'access removed from'
-].join("\t")
-
-agent.backup(BACKUP_FROM, BACKUP_TO)
-.each do |file|
-  puts [
-    file[:id],
-    file[:name],
-    file[:type],
-    file[:removed].join(",")
-  ].join("\t")
-end
+puts JSON.pretty_generate(
+  agent.backup(BACKUP_FROM, BACKUP_TO)
+)

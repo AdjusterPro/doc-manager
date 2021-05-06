@@ -9,25 +9,6 @@ def usage
   abort
 end
 
-def env(var)
-  ENV[var] || raise("please define #{var}")
-end
-
-def email_ok?(email)
-  ok_config ||= JSON.parse(File.read(env('DOC_MGR_OK_EMAILS')))
-
-  email = (email || '').downcase
-  ok_config['domains'].any? { |d| email =~ /@#{d}\z/ } || ok_config['addresses'].include?(email)
-end
-
-def pretty_up(acl)
-  {
-    :role => acl.role,
-    :email_address => acl.email_address,
-    :type => acl.type,
-    :raw => acl.inspect
-  }
-end
 
 
 agent = GoogleBackup.new(
