@@ -23,12 +23,12 @@ class GoogleBackup
 #
 # The JSON file can either be:
 #
-#  (A) from the moment when you generate a Service Account, in which 
+#  (A) the full key info from a Service Account, in which 
 #      case the script will gain access to whatever has been explicitly shared
 #      with that Service Account -- or,
 #
-#  (B) from a "Desktop"-type Oauth 2.0 Client ID, in which case the script
-#      will give you the opportunity to authenticate to Google using any
+#  (B) basic auth info from a "Desktop"-type Oauth 2.0 Client ID,in which case
+#      the script will give you the opportunity to authenticate to Google using any
 #      Google Account that you control (and you will need to explicitly 
 #      grant the Client ID's requested permissions, etc.)
 #
