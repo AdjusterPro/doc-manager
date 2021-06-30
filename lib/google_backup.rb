@@ -16,6 +16,27 @@ class GoogleBackup
   attr_reader :g
 
   def initialize(session, myself, options = {})
+#
+# 'session' should be the return value of GoogleDrive::Session.from_config(), which
+# in turn accepts a path to a JSON file from Google's developer
+# console at console.cloud.google.com.
+#
+# The JSON file can either be:
+#
+#  (A) from the moment when you generate a Service Account, in which 
+#      case the script will gain access to whatever has been explicitly shared
+#      with that Service Account -- or,
+#
+#  (B) from a "Desktop"-type Oauth 2.0 Client ID, in which case the script
+#      will give you the opportunity to authenticate to Google using any
+#      Google Account that you control (and you will need to explicitly 
+#      grant the Client ID's requested permissions, etc.)
+#
+#      N.B.: After you have authorized a Client ID, the script will save a
+#      refresh token into the client ID's JSON config file. Eventually that
+#      refresh token will expire and you'll get a non-helpful error message. The
+#      fix is just to remove the refresh_token property from the JSON object.
+#
     @g = session
     @logger = options[:logger] || Logger.new(STDERR)
     @user_to_remove = (options[:user_to_remove] || 'nobody@example.com').downcase
